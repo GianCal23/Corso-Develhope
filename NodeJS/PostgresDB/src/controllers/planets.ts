@@ -1,18 +1,24 @@
 import { Request, Response } from "express";
-import { db } from "../PostgresDB";
 import Joi from "joi";
+import pgPromise from "pg-promise";
 
-type Planet = {
-  id: number;
-  name: string;
+const db = pgPromise()("postgres://postgres:postgres@localhost:5432/postgres");
+
+const setupDb = async () => {
+  await db.none(`
+    DROP TABLE IF EXISTS planets;
+
+    CREATE TABLE planets (
+    id SERIAL NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL
+    );
+ `);
+
+  await db.none(`INSERT INTO planets(name)VALUES ('Earth')`);
+  await db.none(`INSERT INTO planets (name) VALUES('Mars')`);
+  await db.none(`INSERT INTO planets (name) VALUES ('Jupiter')`);
 };
-
-type Planets = Planet[];
-
-let planets: Planets = [
-  { id: 1, name: "Mars" },
-  { id: 2, name: "Saturn" },
-];
+setupDb();
 
 const getAll = (req: Request, res: Response) => {
   const planets = db.many(`SELECT * FROM planets`);
