@@ -4,6 +4,18 @@ import pgPromise from "pg-promise";
 
 const db = pgPromise()("postgres://postgres:postgres@localhost:5432/postgres");
 
+type Planet = {
+  id: number;
+  name: string;
+};
+
+type Planets = Planet[];
+
+let planets = [
+  { id: 1, name: "Mars" },
+  { id: 2, name: "Saturn" },
+];
+
 const setupDb = async () => {
   await db.none(`
     DROP TABLE IF EXISTS planets;

@@ -12,18 +12,6 @@ const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
 
-type Planet = {
-  id: number;
-  name: string;
-};
-
-type Planets = Planet[];
-
-let planets = [
-  { id: 1, name: "Mars" },
-  { id: 2, name: "Saturn" },
-];
-
 app.get("/api/planets", getAll);
 app.get("/api/planets/:id", getOneById);
 
