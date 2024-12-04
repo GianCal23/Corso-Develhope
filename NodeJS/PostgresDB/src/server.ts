@@ -9,6 +9,7 @@ import {
   deleteById,
   createImg,
 } from "./controllers/planets";
+import { logIn, signUp } from "./controllers/users";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -31,7 +32,10 @@ app.post("/api/planets", create);
 app.put("/api/planets/:id", updateById);
 app.delete("/api/planets/:id", deleteById);
 
-app.put("/api/planets/:id/image", upload.single("image"), createImg);
+app.post("/api/planets/:id/image", upload.single("image"), createImg);
+
+app.post("/api/user/login", logIn);
+app.post("/api/user/signup", signUp);
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("Serving on https://Localhost:3000");
