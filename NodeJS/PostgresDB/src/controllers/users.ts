@@ -53,4 +53,14 @@ const signUp = async (req: Request, res: Response) => {
   }
 };
 
-export { logIn, signUp };
+const logOut = async (req: Request, res: Response) => {
+  try {
+    const user: any = req.user;
+    await db.one(`UPDATE users SET token=$2 WHERE id=$1`, [user?.id, null]);
+    res.status(200).json({ msg: "Logout successful." });
+  } catch (error) {
+    res.status(501);
+  }
+};
+
+export { logIn, signUp, logOut };

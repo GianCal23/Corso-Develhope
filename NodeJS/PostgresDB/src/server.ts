@@ -1,6 +1,8 @@
 import express from "express";
 import morgan from "morgan";
 import multer from "multer";
+import authorize from "./controllers/authorize";
+import "./passport";
 import {
   getAll,
   getOneById,
@@ -9,7 +11,7 @@ import {
   deleteById,
   createImg,
 } from "./controllers/planets";
-import { logIn, signUp } from "./controllers/users";
+import { logIn, signUp, logOut } from "./controllers/users";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -36,6 +38,7 @@ app.post("/api/planets/:id/image", upload.single("image"), createImg);
 
 app.post("/api/user/login", logIn);
 app.post("/api/user/signup", signUp);
+app.post("/api/user/signup", authorize, logOut);
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("Serving on https://Localhost:3000");
