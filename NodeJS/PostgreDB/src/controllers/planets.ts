@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Joi from "joi";
-import { db } from "./../db";
+import { db } from "../db";
 
 const getAll = async (req: Request, res: Response) => {
   try {

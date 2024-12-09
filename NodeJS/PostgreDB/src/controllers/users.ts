@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 import { Request, Response } from "express";
-import { db } from "./../db";
+import { db } from "../db";
 import jwt from "jsonwebtoken";
 
 const logIn = async (req: Request, res: Response) => {
